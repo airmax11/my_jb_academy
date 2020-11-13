@@ -1,0 +1,81 @@
+# write your code here
+import re
+dic = {}
+
+def calc(string):
+    try:
+        print(eval(string))
+    except:
+        print("Invalid expression")
+
+
+def create_list(string):
+    va = re.split('(\W)', string)
+    va_temp = []
+    for i in va:
+        if i in dic:
+            va_temp.append(dic[i])
+        elif i in val:
+            va_temp.append(i)
+        elif i.isdigit():
+            va_temp.append(i)
+        else:
+            print("unknown error")
+    return va_temp
+
+
+while True:
+    val = input()
+    user_commands = ["/exit", "/help"]
+    count_assignments = val.count("=")
+    count_back = val.count("/")
+    if count_assignments > 1:
+        print("Invalid assignments")
+        continue
+    if count_back > 1:
+        print("Invalid expression")
+        continue
+    list_with_var_value = [x.strip() for x in val.split("=")]
+    if len(val) == 0:
+        continue
+    elif val.startswith("/") and val not in user_commands:
+        print("Unknown expression")
+        continue
+    elif val == '/exit':
+        print("Bye!")
+        break
+    elif val == '/help':
+        print("The program calculates the sum of numbers")
+        print("You can input data in following view '5+3-1--3++3'")
+        continue
+    elif "+" in val or "-" in val or "/" in val or "%" in val or "*" in val:
+        calc_list = create_list(val)
+        try:
+            print(int(eval("".join(calc_list))))
+        except:
+            print("Invalid expression")
+    elif len(val) >= 1:
+        if val in dic:
+            print(dic[val])
+            continue
+        elif len(list_with_var_value) == 1 and list_with_var_value[0].isalpha() and list_with_var_value[0] not in dic:
+            print("Unknown variable")
+            continue
+        elif not list_with_var_value[0].isalpha():
+            print("Invalid identifier")
+            continue
+        elif not list_with_var_value[1].isdigit() and list_with_var_value[1] not in dic:
+            print("Invalid assignments")
+            continue
+        elif list_with_var_value[1] in dic:
+            dic[list_with_var_value[0]] = (dic[list_with_var_value[1]])
+            continue
+        elif list_with_var_value[1].isalpha() and list_with_var_value[1] not in dic:
+            print("Unknown variable")
+            continue
+
+
+        dic[list_with_var_value[0]] = list_with_var_value[1]
+
+    else:
+        print(val[0])
