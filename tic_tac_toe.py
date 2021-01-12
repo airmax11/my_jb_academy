@@ -1,4 +1,3 @@
-# write your code here
 
 enter_cell = list('_________')
 
